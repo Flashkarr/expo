@@ -1,97 +1,61 @@
-import React, { useState } from 'react';
-import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import React from "react";
+import { Button, StyleSheet, View } from "react-native";
+
+import HeadText from "../../components/HeadText";
+import TaskList from "../../components/TaskList";
+import TemSwitcher from "../../components/TemSwitcher";
 
 export default function App() {
-  const [text1, setText1] = useState('');
-  const [text2, setText2] = useState('');
-  const [result, setResult] = useState('');
 
-  const [image, setImage] = useState(require('../../assets/images/avatar.png'));
+  const [theme, changeTheme] = React.useState(false);
 
-  const changeImage = () => {
-  setImage(require('../../assets/images/67.jpg'));
-  };
-  const handlePress = () => {
-    const sum = Number(text1) + Number(text2);
-    setResult(sum.toString());
-  };
-
-    const[count, setCount] = useState(0);
-
+  const backgroundColor = theme ? "#000000" : "#ffffff";
+  const textColor = theme ? "#ffffff" : "#000000";
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Завдання 1</Text>
+    <View style={[styles.container, { backgroundColor }]}>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Перше число"
-        value={text1}
-        onChangeText={setText1}
+      {/* task1 */}
+      <HeadText
+        name="Welcome"
+        color="red"
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Друге число"
-        value={text2}
-        onChangeText={setText2}
+      {/* task2 */}
+      <TaskList
+        task="Do homework"
+        execut={false}
       />
 
-      <Button title="Натисни" onPress={handlePress} />
+      <TaskList
+        task="Go to the gym"
+        execut={true}
+      />
 
-      <Text style={styles.text}>Результат: {result}</Text>
+      <TaskList
+        task="Have fun"
+        execut={true}
+      />
 
-
-
-
-      <Text style={styles.text}>Завдання 2</Text>
-
-      <Image source={image} style={styles.image} />
+      {/* task3 */}
+      <TemSwitcher
+        title="Dark Theme"
+        color={textColor}
+      />
 
       <Button
-        title="Натисни, щоб змінити картинку"
-        onPress={changeImage}
+        title="Toggle Theme"
+        onPress={() => changeTheme(!theme)}
       />
-
-
-
-
-      <Text style={styles.text}>Завдання 3</Text>
-      <Text>Лічильник: {count}</Text>
-      <Button title="Додати +1" onPress={() =>setCount(count + 1)} />
 
     </View>
   );
-};
-
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-
-  input: {
-    width: '90%',
-    borderWidth: 1,
-    borderColor: 'gray',
-    padding: 10,
-    marginBottom: 15,
-    borderRadius: 5,
-  },
-
-  text: {
-    fontSize: 22,
-    marginTop: 20,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
